@@ -12,7 +12,6 @@ int main()
 {
 	pid_t  pid;
 	pid_t  pid_grand;
-	int counter = 0;
 	/* fork another process */
 	pid = fork();
 	
@@ -32,6 +31,7 @@ int main()
 		if(pid_grand == 0){
 			fprintf(stderr, "This is grand child process %d", getpid());
 			fprintf(stderr, "\n");
+			system("/usr/bin/firefox");
 			execlp("/bin/ls", "ls", NULL);
 
 			fprintf(stderr, "This is never printed");
@@ -53,7 +53,7 @@ int main()
 		fprintf(stderr, "\n");
 		/* parent will wait for the child to complete */
 		wait(NULL);
-		printf("\n Child Complete \n");
+		printf("\n Parent Complete \n");
 		exit(0);
 	}
 }
