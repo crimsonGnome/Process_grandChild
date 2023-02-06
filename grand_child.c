@@ -34,18 +34,16 @@ int main()
 			system("/usr/bin/firefox");
 			execlp("/bin/ls", "ls", NULL);
 
-			fprintf(stderr, "This is never printed");
-			fprintf(stderr, "\n");
 		}
 		
 		else{
 			fprintf(stderr, "This is child process %d", getpid());
 			fprintf(stderr, "\n");
-			execlp("/bin/ls", "ls", NULL);
-
-			fprintf(stderr, "This is never printed");
-			fprintf(stderr, "\n");
-			printf("\n Child Complete \n");
+			/* child will wait for the grandchild to complete */
+			wait(NULL);
+			printf("\n grandChild Complete \n");
+			exit(0);
+			
 		}
 	}
 	else { /* parent process */
@@ -53,7 +51,7 @@ int main()
 		fprintf(stderr, "\n");
 		/* parent will wait for the child to complete */
 		wait(NULL);
-		printf("\n Parent Complete \n");
+		printf("\n Child Complete \n");
 		exit(0);
 	}
 }
